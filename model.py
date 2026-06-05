@@ -13,3 +13,5 @@ class Todo(db.Model):
     task = db.Column(db.String(300), nullable=False)
     completed = db.Column(db.Boolean, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    print ("Todo model created successfully")
