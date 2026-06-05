@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from model import db, User, Todo
+from flask import redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
@@ -23,19 +24,26 @@ with app.app_context():
 
 # ---------- AUTH ROUTES ----------
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route("/register", methods=["GET", "POST"])
 def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = generate_password_hash(request.form['password'])
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
 
-        user = User(username=username, password=password)
-        db.session.add(user)
+        existing_user = User.query.filter_by(username=username).first()
+
+        if existing_user:
+            flash("Username already exists!", "error")
+            return redirect(url_for("register"))
+
+        new_user = User(username=username, password=password)
+        db.session.add(new_user)
         db.session.commit()
-        flash("Account created! Please login.")
-        return redirect(url_for('login'))
 
-    return render_template('register.html')
+        flash("Account created successfully!", "success")
+        return redirect(url_for("login"))
+
+    return render_template("register.html")
 
 
 @app.route('/login', methods=['GET', 'POST'])
