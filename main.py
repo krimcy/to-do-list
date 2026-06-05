@@ -51,6 +51,8 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """Handle user login (GET shows form, POST authenticates and logs in)."""
+
     if request.method == 'POST':
         user = User.query.filter_by(username=request.form['username']).first()
 
@@ -66,6 +68,7 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
+    """Log out the current user."""
     logout_user()
     return redirect(url_for('login'))
 
@@ -75,6 +78,7 @@ def logout():
 @app.route('/')
 @login_required
 def index():
+    """Retrieve and display all todos for the current user."""
     todos = Todo.query.filter_by(user_id=current_user.id).all()
     return render_template('index.html', todos=todos)
 
@@ -82,6 +86,7 @@ def index():
 @app.route('/add', methods=['POST'])
 @login_required
 def add():
+    """Add a new todo task for the current user."""
     task = request.form['task']
     todo = Todo(task=task, user_id=current_user.id)
     db.session.add(todo)
@@ -92,6 +97,7 @@ def add():
 @app.route('/delete/<int:id>')
 @login_required
 def delete(id):
+    """Delete a todo task for the current user."""
     todo = Todo.query.get(id)
     if todo and todo.user_id == current_user.id:
         db.session.delete(todo)
@@ -102,6 +108,11 @@ def delete(id):
 @app.route('/done/<int:id>')
 @login_required
 def done(id):
+    """Toggle completion state of a todo item for the current user.
+
+    Args:
+        id (int): ID of the todo item to toggle.
+    """
     todo = Todo.query.get(id)
     if todo and todo.user_id == current_user.id:
         todo.completed = not todo.completed
