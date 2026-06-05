@@ -1,21 +1,16 @@
-<h2>Your To-Do List</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List (No JS)</title>
+</head>
+<body>
 
-<a href="/logout">Logout</a>
+    <h1>My To-Do List</h1>
 
-<form method="POST" action="/add">
-    <input name="task" placeholder="New task">
-    <button type="submit">Add</button>
-</form>
-<ul>
-    {% for todo in todos %}
-        <li>
-            {% if todo.completed %}
-                <strike>{{ todo.task }}</strike>
-            {% else %}
-                {{ todo.task }}
-            {% endif %}
+    <!-- Add Task -->
+    <form action="/add" method="POST">
+        <input type="text" name="task" placeholder="Enter task" required>
+        <button type="submit">Add</button>
+    </form>
 
-            <a href="/done/{{ todo.id }}">✔</a>
-            <a href="/delete/{{ todo.id }}">❌</a>
-        </li>
-    {% endfor %}
+    <hr>
