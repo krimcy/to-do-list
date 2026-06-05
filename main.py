@@ -86,3 +86,16 @@ def delete(id):
         db.session.delete(todo)
         db.session.commit()
     return redirect(url_for('index'))
+
+@app.route('/done/<int:id>')
+@login_required
+def done(id):
+    todo = Todo.query.get(id)
+    if todo and todo.user_id == current_user.id:
+        todo.completed = not todo.completed
+        db.session.commit()
+    return redirect(url_for('index'))
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
