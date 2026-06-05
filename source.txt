@@ -1,0 +1,6 @@
+Chatgpt 
+promots of chatgpt 
+1)(myenv) (base) krimcybehrani@Mac to-do-list % git remote add origin git@github.com:krimcybehrani/to-do-list.git error: remote origin already exists. (myenv) (base) krimcybehrani@Mac to-do-list %
+2)how to resolve this error 
+3)Unable to commit From https://github.com/krimcy/Advance-to-do-list-UsingFlask * branch main -> FETCH_HEAD fatal: refusing to merge unrelated histories (myenv) (base) krimcybehrani@Mac to-do-list % git pull origin main --allow-unrelated-histories From https://github.com/krimcy/Advance-to-do-list-UsingFlask * branch main -> FETCH_HEAD hint: You have divergent branches and need to specify how to reconcile them. hint: You can do so by running one of the following commands sometime before
+4)Make sure you configure your "user.name" and "user.email" in git.
