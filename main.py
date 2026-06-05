@@ -59,3 +59,30 @@ def logout():
     return redirect(url_for('login'))
 
 
+# ---------- TODO ROUTES ----------
+
+@app.route('/')
+@login_required
+def index():
+    todos = Todo.query.filter_by(user_id=current_user.id).all()
+    return render_template('index.html', todos=todos)
+
+
+@app.route('/add', methods=['POST'])
+@login_required
+def add():
+    task = request.form['task']
+    todo = Todo(task=task, user_id=current_user.id)
+    db.session.add(todo)
+    db.session.commit()
+    return redirect(url_for('index'))
+
+
+@app.route('/delete/<int:id>')
+@login_required
+def delete(id):
+    todo = Todo.query.get(id)
+    if todo and todo.user_id == current_user.id:
+        db.session.delete(todo)
+        db.session.commit()
+    return redirect(url_for('index'))
