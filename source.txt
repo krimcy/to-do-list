@@ -4,3 +4,6 @@ promots of chatgpt
 2)how to resolve this error 
 3)Unable to commit From https://github.com/krimcy/Advance-to-do-list-UsingFlask * branch main -> FETCH_HEAD fatal: refusing to merge unrelated histories (myenv) (base) krimcybehrani@Mac to-do-list % git pull origin main --allow-unrelated-histories From https://github.com/krimcy/Advance-to-do-list-UsingFlask * branch main -> FETCH_HEAD hint: You have divergent branches and need to specify how to reconcile them. hint: You can do so by running one of the following commands sometime before
 4)Make sure you configure your "user.name" and "user.email" in git.
+5)Create a README file for tis project.
+6)For flask understanding we go through this website => https://flask.palletsprojects.com/en/stable/installation/
+7)Reference idea for this project => https://boardmix.com/tips/to-do-list-for-students/  
