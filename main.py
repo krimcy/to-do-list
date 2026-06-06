@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from model import db, User, Todo
-from werkzeug.security import check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret-key-change-this'
@@ -39,7 +39,9 @@ def register():
             flash("Username already exists!", "error")
             return redirect(url_for("register"))
 
-        new_user = User(username=username, password=password)
+        hashed_password = generate_password_hash(password)
+        new_user = User(username=username, password=hashed_password)
+
         db.session.add(new_user)
         db.session.commit()
 
@@ -66,11 +68,11 @@ def login():
 
 
 @app.route('/logout')
-@login_required
 def logout():
     """Log out the current user."""
     logout_user()
     return redirect(url_for('login'))
+
 
 
 # ---------- TODO ROUTES ----------
