@@ -15,4 +15,9 @@ class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     task = db.Column(db.String(300), nullable=False)
     completed = db.Column(db.Boolean, default=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    user_id = db.Column(
+          db.Integer, 
+          db.ForeignKey('user.id'),
+          nullable=False
+          )

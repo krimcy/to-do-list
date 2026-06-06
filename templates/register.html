@@ -1,29 +1,40 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Register</title>
-</head>
-<body>
-    <h2>Register Page</h2>
+{% extends "base.html" %}
 
-    <!-- FLASH MESSAGES -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul>
-          {% for category, message in messages %}
-            <li>
-              <strong>{{ category }}:</strong> {{ message }}
-            </li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
+{% block content %}
 
-    <form method="POST">
-        <input name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Register</button>
+<div class="auth-container">
+
+    <h2>Create Account</h2>
+
+    <form method="POST" class="auth-form">
+
+        <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            required
+        >
+
+        <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+        >
+
+        <button type="submit">
+            Register
+        </button>
+
     </form>
 
-</body>
-</html>
+    <div class="auth-footer">
+        Already have an account?
+        <a href="{{ url_for('login') }}">
+            Login
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

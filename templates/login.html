@@ -1,12 +1,99 @@
 {% extends "base.html" %}
+
 {% block content %}
-<h2>Login</h2>
 
-<form method="POST">
-    <input name="username" placeholder="Username">
-    <input name="password" type="password" placeholder="Password">
-    <button type="submit">Login</button>
-</form>
+<style>
+    .auth-container{
+        max-width:400px;
+        margin:80px auto;
+        background:white;
+        padding:30px;
+        border-radius:12px;
+        box-shadow:0 5px 15px rgba(0,0,0,0.08);
+    }
 
-<a href="/register">Register</a>
+    .auth-container h2{
+        text-align:center;
+        margin-bottom:25px;
+        color:#333;
+    }
+
+    .auth-form{
+        display:flex;
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .auth-form input{
+        padding:12px;
+        border:1px solid #ddd;
+        border-radius:8px;
+        font-size:15px;
+    }
+
+    .auth-form button{
+        padding:12px;
+        border:none;
+        border-radius:8px;
+        background:#0d6efd;
+        color:white;
+        cursor:pointer;
+        font-size:15px;
+    }
+
+    .auth-form button:hover{
+        background:#0b5ed7;
+    }
+
+    .auth-footer{
+        text-align:center;
+        margin-top:20px;
+    }
+
+    .auth-footer a{
+        text-decoration:none;
+        color:#0d6efd;
+        font-weight:500;
+    }
+
+    .auth-footer a:hover{
+        text-decoration:underline;
+    }
+</style>
+
+<div class="auth-container">
+
+    <h2>Login</h2>
+
+    <form method="POST" class="auth-form">
+
+        <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            required
+        >
+
+        <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+        >
+
+        <button type="submit">
+            Login
+        </button>
+
+    </form>
+
+    <div class="auth-footer">
+        Don't have an account?
+        <a href="{{ url_for('register') }}">
+            Register
+        </a>
+    </div>
+
+</div>
+
 {% endblock %}

@@ -1,28 +1,192 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>To-Do List (No JS)</title>
+    <meta charset="UTF-8">
+    <title>My Tasks</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            background:#f4f6f9;
+        }
+
+        .container{
+            max-width:700px;
+            margin:50px auto;
+            background:white;
+            padding:30px;
+            border-radius:12px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:25px;
+        }
+
+        h1{
+            color:#333;
+            font-size:28px;
+        }
+
+        .logout{
+            text-decoration:none;
+            background:#dc3545;
+            color:white;
+            padding:8px 14px;
+            border-radius:6px;
+            font-size:14px;
+        }
+
+        .logout:hover{
+            opacity:0.9;
+        }
+
+        .add-form{
+            display:flex;
+            gap:10px;
+            margin-bottom:25px;
+        }
+
+        .add-form input{
+            flex:1;
+            padding:12px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            outline:none;
+        }
+
+        .add-form button{
+            border:none;
+            background:#0d6efd;
+            color:white;
+            padding:12px 20px;
+            border-radius:8px;
+            cursor:pointer;
+        }
+
+        .add-form button:hover{
+            background:#0b5ed7;
+        }
+
+        .task{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:15px;
+            margin-bottom:12px;
+            border:1px solid #eee;
+            border-radius:8px;
+        }
+
+        .task-text{
+            flex:1;
+            color:#333;
+        }
+
+        .completed{
+            text-decoration:line-through;
+            color:#888;
+        }
+
+        .actions{
+            display:flex;
+            gap:8px;
+        }
+
+        .btn{
+            text-decoration:none;
+            color:white;
+            padding:8px 12px;
+            border-radius:6px;
+            font-size:13px;
+            min-width:70px;
+            text-align:center;
+        }
+
+        .done{
+            background:#198754;
+        }
+
+        .done:hover{
+            background:#157347;
+        }
+
+        .delete{
+            background:#dc3545;
+        }
+
+        .delete:hover{
+            background:#bb2d3b;
+        }
+
+        .empty{
+            text-align:center;
+            color:#777;
+            padding:25px 0;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>My To-Do List</h1>
+<div class="container">
 
-    <!-- Add Task -->
-    <form action="/add" method="POST">
-        <input type="text" name="task" placeholder="Enter task" required>
+    <div class="header">
+        <h1>My Tasks</h1>
+        <a href="{{ url_for('logout') }}" class="logout">Logout</a>
+    </div>
+
+    <form class="add-form" action="{{ url_for('add') }}" method="POST">
+        <input
+            type="text"
+            name="task"
+            placeholder="Add a new task..."
+            required
+        >
         <button type="submit">Add</button>
     </form>
 
-    <hr>
-<!-- Task List -->
-    <ul>
-        {% for task in tasks %}
-            <li>
-                {{ task }}
-                <a href="/delete/{{ loop.index0 }}">Delete</a>
-            </li>
+    {% if todos %}
+        {% for todo in todos %}
+            <div class="task">
+
+                <div class="task-text {% if todo.completed %}completed{% endif %}">
+                    {{ todo.task }}
+                </div>
+
+                <div class="actions">
+                    <a href="{{ url_for('done', id=todo.id) }}"
+                       class="btn done">
+                        {% if todo.completed %}
+                            Undo
+                        {% else %}
+                            Done
+                        {% endif %}
+                    </a>
+
+                    <a href="{{ url_for('delete', id=todo.id) }}"
+                       class="btn delete">
+                        Delete
+                    </a>
+                </div>
+
+            </div>
         {% endfor %}
-    </ul>
+    {% else %}
+        <div class="empty">
+            No tasks added yet.
+        </div>
+    {% endif %}
+
+</div>
 
 </body>
 </html>
